@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>Hack Simulation Final</title>
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      font-family: monospace;
+      color: #00ff55;
+    }
+
+    #page1 {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      padding-top: 120px;
+    }
+
+    .hacker-bar {
+      width: 80%;
+      max-width: 600px;
+      height: 35px;
+      background: linear-gradient(90deg, #00cc44, #00aa33);
+      border: 1px solid #00ff55;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 8px #00ff55;
+      margin-bottom: 40px;
+    }
+
+    .hacker-input {
+      width: 90%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #000;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .hack-btn {
+      width: 150px;
+      height: 45px;
+      background: linear-gradient(180deg, #00cc44, #00aa33);
+      border: 1px solid #00ff55;
+      border-radius: 10px;
+      color: #000;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 8px #00ff55;
+    }
+
+    #page2 {
+      display: none;
+      padding: 40px;
+      font-size: 18px;
+      line-height: 1.6;
+      white-space: pre-line;
+      position: relative;
+    }
+
+    /* پیام Hacked */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      color: #fff;
+      border-radius: 6px;
+      padding: 20px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 10px #00ff55;
+      display: none;
+    }
+
+    .overlay-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .overlay-text {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .show-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: #00ff55;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="page1">
+  <div class="hacker-bar">
+    <input id="targetInput" class="hacker-input" type="number" placeholder="@L0MX0">
+  </div>
+  <button id="hackBtn" class="hack-btn">HACK</button>
+</div>
+
+<div id="page2">
+  <div id="typedText"></div>
+  <div id="overlay" class="overlay">
+    <div class="overlay-title">Hacked!</div>
+    <div class="overlay-text">Successfully hacked - click to show app</div>
+    <button class="show-btn">SHOW</button>
+  </div>
+</div>
+
+<script>
+  const hackBtn = document.getElementById("hackBtn");
+  const page1 = document.getElementById("page1");
+  const page2 = document.getElementById("page2");
+  const input = document.getElementById("targetInput");
+  const overlay = document.getElementById("overlay");
+  const showBtn = document.querySelector(".show-btn");
+  const typedText = document.getElementById("typedText");
+
+  hackBtn.addEventListener("click", () => {
+    const num = input.value.trim();
+    if (!num) {
+      alert("عدد وارد کن!");
+      return;
+    }
+
+    page1.style.display = "none";
+    page2.style.display = "block";
+
+    const lines = [
+      `Target number: ${num}`,
+      "Spoofing number: 476-396-5861",
+      "Setting proxy: Russia",
+      "Proxy set!",
+      "Scaning network carreier . . .",
+      "Vulnerability found!",
+      "Searching local database . . .",
+      "",
+      "Hacking remote",
+      "pin . . . . . . . . . . . . . . . . . . . . . . . . . ",
+      "Remote pin received!",
+      "",
+      "Hacked pin: 6543!"
+    ];
+
+    let index = 0;
+
+    function typeLine() {
+      if (index >= lines.length) {
+        setTimeout(() => overlay.style.display = "block", 800);
+        return;
+      }
+
+      let charIndex = 0;
+      const line = lines[index];
+
+      function typeChar() {
+        if (charIndex <= line.length) {
+          typedText.textContent += line.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeChar, 30);
+        } else {
+          typedText.textContent += "\n";
+          index++;
+          setTimeout(typeLine, 200);
+        }
+      }
+
+      typeChar();
+    }
+
+    typeLine();
+  });
+
+  showBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+    alert("برنامه بعدی اینجا باز میشه (بعداً تعریفش می‌کنیم)");
+  });
+</script>
+
+</body>
+</html>
